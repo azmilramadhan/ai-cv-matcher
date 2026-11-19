@@ -99,7 +99,7 @@ export default function InputSection({
                   : "text-zinc-500 dark:text-zinc-400"
               }`}
             >
-              {cvText.length.toLocaleString()} / {MAX_CHARS.toLocaleString()} karakter
+              {cvText.length} / 10.000 karakter
             </span>
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function InputSection({
                   : "text-zinc-500 dark:text-zinc-400"
               }`}
             >
-              {jobDescText.length.toLocaleString()} / {MAX_CHARS.toLocaleString()} karakter
+              {jobDescText.length} / 10.000 karakter
             </span>
           </div>
         </div>

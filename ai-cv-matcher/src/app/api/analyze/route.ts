@@ -1,46 +1,72 @@
-import { google } from "@ai-sdk/google";
-import { generateObject } from "ai";
-import { NextResponse } from "next/server";
-import { analysisSchema } from "@/lib/schema";
+import { NextResponse } from 'next/server';
+import { generateObject } from 'ai';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { analysisSchema } from '@/lib/schema';
 
-const MAX_CHARS = 10000;
+export const maxDuration = 30;
+
+const google = createGoogleGenerativeAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
+
+async function runAnalysis(modelId: string, cvText: string, jobDescText: string) {
+  return await generateObject({
+    model: google(modelId),
+    schema: analysisSchema,
+    maxRetries: 0,
+    abortSignal: AbortSignal.timeout(15000),
+    system:
+      'Anda adalah Senior Tech Recruiter yang objektif, teliti, dan analitis. Lakukan audit mendalam antara CV kandidat dan Job Description. Ekstrak semua kata kunci yang cocok maupun yang kurang tanpa terlewat, dan berikan minimal 3 saran penulisan ulang poin CV yang konkret dan berdampak. Gunakan bahasa yang sama dengan bahasa pada input.',
+    prompt: `CV KANDIDAT:\n${cvText}\n\nDESKRIPSI PEKERJAAN:\n${jobDescText}`,
+  });
+}
 
 export async function POST(req: Request) {
+  const startTime = Date.now();
+
   try {
+    if (!process.env.GEMINI_API_KEY) {
+      return NextResponse.json(
+        { error: 'GEMINI_API_KEY belum terbaca di server.' },
+        { status: 500 }
+      );
+    }
+
     const { cvText, jobDescText } = await req.json();
 
-    if (
-      typeof cvText !== "string" ||
-      typeof jobDescText !== "string" ||
-      !cvText.trim() ||
-      !jobDescText.trim() ||
-      cvText.length > MAX_CHARS ||
-      jobDescText.length > MAX_CHARS
-    ) {
+    if (!cvText?.trim() || !jobDescText?.trim()) {
       return NextResponse.json(
-        { error: "cvText dan jobDescText wajib diisi dan maksimal 10.000 karakter." },
+        { error: 'Teks CV dan Job Description tidak boleh kosong.' },
         { status: 400 }
       );
     }
 
-    const { object } = await generateObject({
-      model: google("gemini-3.5-flash-lite"),
-      schema: analysisSchema,
-      system:
-        "Anda adalah Senior Tech Recruiter yang sangat objektif, kritis, dan berbasis data. " +
-        "Evaluasi kecocokan kandidat berdasarkan CV dan Job Description yang diberikan. " +
-        "Jangan melebih-lebihkan skor atau kualifikasi jika tidak relevan. " +
-        "Tulis summary maksimal 3 kalimat dalam bahasa yang sama dengan input. " +
-        "Berikan minimal 3 saran perbaikan (improvements) berorientasi metrik dan dampak profesional.",
-      prompt: `CV Kandidat:\n${cvText}\n\nJob Description:\n${jobDescText}`,
-    });
+    if (cvText.length > 10000 || jobDescText.length > 10000) {
+      return NextResponse.json(
+        { error: 'Teks melebihi batas maksimal 10.000 karakter.' },
+        { status: 400 }
+      );
+    }
 
-    return NextResponse.json(object);
-  } catch (error) {
-    console.error("Analyze error:", error);
+    try {
+      const { object } = await runAnalysis('gemini-3.5-flash-lite', cvText, jobDescText);
+      console.log(`[Sukses] Primary (lite) selesai dalam ${(Date.now() - startTime) / 1000} detik`);
+      return NextResponse.json(object);
+    } catch (primaryError) {
+      console.warn(
+        `[Fallback] Model lite gagal setelah ${(Date.now() - startTime) / 1000} detik. Beralih ke gemini-3.8-flash...`,
+        primaryError instanceof Error ? primaryError.message : primaryError
+      );
+
+      const { object } = await runAnalysis('gemini-3.8-flash', cvText, jobDescText);
+      console.log(`[Sukses] Fallback (3.8-flash) selesai dalam ${(Date.now() - startTime) / 1000} detik`);
+      return NextResponse.json(object);
+    }
+  } catch (error: unknown) {
+    console.error(`[Gagal Total] Setelah ${(Date.now() - startTime) / 1000} detik:`, error);
     return NextResponse.json(
-      { error: "Gagal menganalisis CV dan Job Description." },
-      { status: 500 }
+      { error: 'Server AI sedang sibuk. Silakan klik Analisis Kecocokan sekali lagi.' },
+      { status: 503 }
     );
   }
 }
