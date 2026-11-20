@@ -32,7 +32,6 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
     }
   };
 
-  // Penentuan warna & reaksi Kang Cek berdasarkan skor
   const getScoreFeedback = (score: number) => {
     if (score >= 75) {
       return {
@@ -65,7 +64,7 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
 
   return (
     <section className="max-w-5xl mx-auto mt-10 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      {/* Header Hasil */}
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 pb-4">
         <div>
           <h2 className="text-2xl font-extrabold text-zinc-900">
@@ -101,14 +100,16 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
                 <span className="text-xl font-bold text-zinc-400">/ 100</span>
               </div>
             </div>
-            <div className="relative flex-shrink-0 flex items-center justify-center">
-              <MascotImage
-                src="/mascots/kang-cek-gacor.png"
-                alt="Status Skor Kang Cek"
-                fallbackEmoji={result.matchScore >= 75 ? "🔥" : "💪"}
-                className="h-16 w-16 object-contain animate-float"
-              />
-            </div>
+            {result.matchScore >= 75 && (
+              <div className="relative flex-shrink-0 flex items-center justify-center">
+                <MascotImage
+                  src="/mascots/kang-cek-gacor.png"
+                  alt="Status Skor Kang Cek"
+                  fallbackEmoji="🔥"
+                  className="h-16 w-16 object-contain animate-float"
+                />
+              </div>
+            )}
           </div>
 
           <div className="mt-6 space-y-2">
