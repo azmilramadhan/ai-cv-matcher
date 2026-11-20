@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import {
   CheckCircle2,
   AlertCircle,
@@ -114,8 +115,16 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
 
         {/* Kolom Kata Kang Cek */}
         <div className="md:col-span-8 bg-emerald-50/70 border border-emerald-100 rounded-3xl p-6 flex flex-col justify-center">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-xl">🐱</span>
+          <div className="flex items-center gap-2.5 mb-3">
+            <div className="relative h-7 w-7 flex-shrink-0 overflow-hidden rounded-full border border-amber-300 bg-amber-100 shadow-sm">
+              <Image
+                src="/kang-cek.png"
+                alt="Kang Cek"
+                width={28}
+                height={28}
+                className="h-full w-full object-cover"
+              />
+            </div>
             <h3 className="font-bold text-zinc-900 text-base">
               Catatan Jujur dari Kang Cek:
             </h3>

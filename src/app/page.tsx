@@ -128,10 +128,10 @@ export default function Home() {
 
         {/* Error Alert */}
         {error && (
-          <div className="flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 p-4 text-xs text-rose-800">
+          <div className="flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-xs text-rose-800">
             <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-rose-600" />
             <div>
-              <p className="font-semibold text-rose-900">Analisis Tidak Dapat Diproses</p>
+              <p className="font-bold text-rose-900">Waduh, Kang Cek Belum Bisa Bedah CV Kamu Nih</p>
               <p className="mt-0.5 text-rose-700">{error}</p>
             </div>
           </div>
