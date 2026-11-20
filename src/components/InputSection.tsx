@@ -2,15 +2,14 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
+import MascotImage from "@/components/MascotImage";
 import {
   FileText,
   Briefcase,
   RotateCcw,
   Loader2,
-  Upload,
   FileCheck,
   AlertCircle,
-  Search,
 } from "lucide-react";
 import { SAMPLE_CV, SAMPLE_JOB_DESC } from "@/lib/sample-data";
 import { extractTextFromPdf } from "@/lib/pdf-parser";
@@ -170,7 +169,12 @@ export default function InputSection({
                   </>
                 ) : (
                   <>
-                    <Upload className="h-3.5 w-3.5 text-zinc-500" />
+                    <MascotImage
+                      src="/mascots/icon-cv-drop.png"
+                      alt="Upload PDF"
+                      fallbackEmoji="📄"
+                      className="h-4 w-4 object-contain"
+                    />
                     <span>Upload File PDF</span>
                   </>
                 )}
@@ -272,35 +276,6 @@ export default function InputSection({
           </div>
         </div>
       </div>
-
-      {/* Animasi Kang Cek saat proses menunggu */}
-      {isLoading && (
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 rounded-3xl border-2 border-emerald-200 bg-emerald-50/80 p-5 shadow-sm text-center sm:text-left animate-in fade-in zoom-in-95 duration-300">
-          <div className="relative flex-shrink-0">
-            <div className="relative h-16 w-16 overflow-hidden rounded-full border-2 border-amber-300 bg-amber-100 shadow-md animate-bounce">
-              <Image
-                src="/kang-cek.png"
-                alt="Kang Cek sedang membedah CV"
-                width={64}
-                height={64}
-                priority
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <span className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500 text-white shadow">
-              <Search className="h-3.5 w-3.5 animate-pulse" />
-            </span>
-          </div>
-          <div className="space-y-1">
-            <h3 className="text-base font-extrabold text-zinc-900">
-              Tunggu ya, Kang Cek sedang membedah CV kamu!
-            </h3>
-            <p className="text-xs text-zinc-600 max-w-lg">
-              Lagi dicocokin skill, kata kunci yang kurang, sampai susunan kalimat pengalaman kerja biar pas sama selera HR. Jangan ditutup ya halamannya!
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Primary Action Button */}
       <div className="flex justify-end pt-1">

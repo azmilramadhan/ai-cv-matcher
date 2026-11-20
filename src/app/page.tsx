@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ShieldCheck, AlertCircle } from "lucide-react";
 import InputSection from "@/components/InputSection";
 import ResultDashboard from "@/components/ResultDashboard";
+import AnalyzingState from "@/components/AnalyzingState";
 import HistoryBar from "@/components/HistoryBar";
 import Header from "@/components/Header";
+import MascotImage from "@/components/MascotImage";
 import type { AnalysisResult } from "@/lib/schema";
 import { getHistory, saveHistory, clearHistory, type HistoryItem } from "@/lib/history";
 
@@ -17,11 +19,19 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [historyItems, setHistoryItems] = useState<HistoryItem[]>([]);
+  const analyzingRef = useRef<HTMLDivElement>(null);
 
   // ponytail: read localStorage only on client mount to avoid React hydration mismatch
   useEffect(() => {
     setHistoryItems(getHistory());
   }, []);
+
+  // Smooth scroll ke area animasi saat mulai menganalisis
+  useEffect(() => {
+    if (isLoading && analyzingRef.current) {
+      analyzingRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [isLoading]);
 
   const handleSelectHistory = (item: HistoryItem) => {
     setCvText(item.cvText);
@@ -79,12 +89,11 @@ export default function Home() {
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
           <div className="flex items-center gap-2.5">
             <div className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-amber-300 bg-amber-100">
-              <Image
-                src="/kang-cek.png"
+              <MascotImage
+                src="/mascots/kang-cek-hi.png"
                 alt="Kang Cek"
-                width={32}
-                height={32}
-                className="h-full w-full object-cover"
+                fallbackEmoji="🐱"
+                className="h-full w-full object-contain"
               />
             </div>
             <div>
@@ -137,8 +146,13 @@ export default function Home() {
           </div>
         )}
 
+        {/* Layar Tunggu Interaktif saat Menganalisis */}
+        <div ref={analyzingRef}>
+          {isLoading && <AnalyzingState />}
+        </div>
+
         {/* Dashboard Hasil Analisis */}
-        {result && <ResultDashboard result={result} />}
+        {result && !isLoading && <ResultDashboard result={result} />}
       </main>
     </div>
   );

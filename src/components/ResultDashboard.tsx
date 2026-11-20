@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import MascotImage from '@/components/MascotImage';
 import {
   CheckCircle2,
   AlertCircle,
@@ -86,17 +87,29 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Kolom Skor */}
         <div className="md:col-span-4 bg-white border border-zinc-200 rounded-3xl p-6 flex flex-col justify-between">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
-              Skor Kecocokan ATS
-            </span>
-            <div className="mt-2 flex items-baseline gap-1">
-              <span
-                className={`text-5xl font-black font-mono tabular-nums ${feedback.textColor}`}
-              >
-                {result.matchScore}
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                Skor Kecocokan ATS
               </span>
-              <span className="text-xl font-bold text-zinc-400">/ 100</span>
+              <div className="mt-2 flex items-baseline gap-1">
+                <span
+                  className={`text-5xl font-black font-mono tabular-nums ${feedback.textColor}`}
+                >
+                  {result.matchScore}
+                </span>
+                <span className="text-xl font-bold text-zinc-400">/ 100</span>
+              </div>
+            </div>
+            <div className="relative flex-shrink-0">
+              <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-amber-200 bg-amber-50 shadow-sm">
+                <MascotImage
+                  src="/mascots/kang-cek-gacor.png"
+                  alt="Status Skor Kang Cek"
+                  fallbackEmoji={result.matchScore >= 75 ? "🔥" : "💪"}
+                  className="h-14 w-14 object-contain animate-float"
+                />
+              </div>
             </div>
           </div>
 
