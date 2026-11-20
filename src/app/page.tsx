@@ -11,6 +11,7 @@ import Header from "@/components/Header";
 import MascotImage from "@/components/MascotImage";
 import type { AnalysisResult } from "@/lib/schema";
 import { getHistory, saveHistory, clearHistory, type HistoryItem } from "@/lib/history";
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const [cvText, setCvText] = useState("");
@@ -26,7 +27,6 @@ export default function Home() {
     setHistoryItems(getHistory());
   }, []);
 
-  // Smooth scroll ke area animasi saat mulai menganalisis
   useEffect(() => {
     if (isLoading && analyzingRef.current) {
       analyzingRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -98,7 +98,7 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-sm font-semibold tracking-tight text-zinc-900">
-                Kang Cek <span className="font-normal text-zinc-400">|</span> AI CV Matcher
+                LolosKerja <span className="font-normal text-zinc-400">|</span> AI CV Matcher
               </h1>
               <p className="text-[11px] text-zinc-500">
                 Bedah keselarasan CV dengan lowongan incaranmu secara instan.
@@ -106,10 +106,6 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-800">
-            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
-            <span>Client-Side PDF &amp; Zero-Storage Privacy</span>
-          </div>
         </div>
       </header>
 
@@ -153,8 +149,8 @@ export default function Home() {
 
         {/* Dashboard Hasil Analisis */}
         {result && !isLoading && <ResultDashboard result={result} />}
+        <Footer />
       </main>
     </div>
   );
 }
-

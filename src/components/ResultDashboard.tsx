@@ -32,6 +32,7 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
     }
   };
 
+  
   const getScoreFeedback = (score: number) => {
     if (score >= 75) {
       return {
@@ -64,7 +65,7 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
 
   return (
     <section className="max-w-5xl mx-auto mt-10 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-
+      {/* Header Hasil */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 pb-4">
         <div>
           <h2 className="text-2xl font-extrabold text-zinc-900">
