@@ -37,16 +37,16 @@ export default function HistoryBar({ items, onSelect, onClear }: HistoryBarProps
   }
 
   return (
-    <section className="rounded-2xl border border-amber-100 bg-amber-50/40 p-3.5 transition">
+    <section className="rounded-2xl bg-amber-50/40 p-3.5 transition shadow-sm">
       <div className="mb-2.5 flex items-center justify-between gap-2 px-1">
         <div className="flex items-center gap-2 text-xs font-semibold text-zinc-700">
-          <div className="relative h-4 w-4 overflow-hidden rounded-full border border-amber-300 bg-amber-100">
+          <div className="relative h-5 w-5 flex-shrink-0 flex items-center justify-center">
             <Image
               src="/kang-cek.png"
               alt="Kang Cek"
-              width={16}
-              height={16}
-              className="h-full w-full object-cover"
+              width={20}
+              height={20}
+              className="h-full w-full object-contain"
             />
           </div>
           <span>Riwayat Bedahan CV Terakhir Kamu</span>
@@ -74,7 +74,7 @@ export default function HistoryBar({ items, onSelect, onClear }: HistoryBarProps
               type="button"
               onClick={() => onSelect(item)}
               title="Klik buat buka lagi hasil bedahan ini"
-              className="group flex flex-shrink-0 items-center gap-2.5 rounded-xl border border-zinc-200/80 bg-white px-3 py-2 text-left shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50/30"
+              className="group flex flex-shrink-0 items-center gap-2.5 rounded-xl bg-white px-3 py-2 text-left shadow-sm transition hover:bg-emerald-50/40"
             >
               <span
                 className={`inline-flex items-center rounded-lg border px-2 py-0.5 font-mono text-xs font-bold tabular-nums ${badgeClass}`}

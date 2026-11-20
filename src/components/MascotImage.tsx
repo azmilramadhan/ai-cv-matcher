@@ -21,7 +21,7 @@ export default function MascotImage({
   if (hasError || !src) {
     return (
       <div
-        className={`flex items-center justify-center rounded-full bg-amber-100/90 border border-amber-200 select-none shadow-sm ${className}`}
+        className={`flex items-center justify-center select-none ${className}`}
         role="img"
         aria-label={alt}
       >

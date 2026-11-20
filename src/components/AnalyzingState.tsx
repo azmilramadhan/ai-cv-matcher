@@ -35,24 +35,16 @@ export default function AnalyzingState() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-emerald-200 bg-emerald-50/90 p-8 shadow-sm my-8 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
-      {/* Garis Scanner Hijau Berulang */}
-      <div className="pointer-events-none absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-scanline opacity-75 shadow-[0_0_12px_rgba(16,185,129,0.8)]" />
-
+    <section className="relative overflow-hidden rounded-3xl bg-emerald-50/90 p-8 shadow-sm my-8 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col items-center justify-center space-y-5 py-4">
-        {/* Gambar Maskot Scan dengan Animasi Float */}
-        <div className="relative">
-          <div className="relative flex h-28 w-28 items-center justify-center rounded-full border-4 border-white bg-amber-100 shadow-md">
-            <MascotImage
-              src="/mascots/kang-cek-scan.png"
-              alt="Kang Cek sedang scanning CV"
-              fallbackEmoji="🕵️‍♂️"
-              className="h-24 w-24 object-contain animate-float"
-            />
-          </div>
-          <span className="absolute -bottom-2 -right-1 rounded-full border border-emerald-300 bg-emerald-500 px-2 py-0.5 text-[10px] font-bold text-white shadow">
-            Scanning
-          </span>
+        {/* Gambar Maskot Berdiri Sendiri dengan Animasi Float */}
+        <div className="relative flex items-center justify-center">
+          <MascotImage
+            src="/mascots/kang-cek-scan.png"
+            alt="Kang Cek sedang membedah CV"
+            fallbackEmoji="🕵️‍♂️"
+            className="h-28 w-28 object-contain animate-float"
+          />
         </div>
 
         {/* Teks Status Dinamis Berganti Setiap 2.5 Detik */}

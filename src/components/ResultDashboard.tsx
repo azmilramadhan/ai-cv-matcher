@@ -86,7 +86,7 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
       {/* Kartu Skor & Ringkasan */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Kolom Skor */}
-        <div className="md:col-span-4 bg-white border border-zinc-200 rounded-3xl p-6 flex flex-col justify-between">
+        <div className="md:col-span-4 bg-white rounded-3xl p-6 flex flex-col justify-between shadow-sm">
           <div className="flex items-start justify-between gap-3">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
@@ -101,15 +101,13 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
                 <span className="text-xl font-bold text-zinc-400">/ 100</span>
               </div>
             </div>
-            <div className="relative flex-shrink-0">
-              <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-amber-200 bg-amber-50 shadow-sm">
-                <MascotImage
-                  src="/mascots/kang-cek-gacor.png"
-                  alt="Status Skor Kang Cek"
-                  fallbackEmoji={result.matchScore >= 75 ? "🔥" : "💪"}
-                  className="h-14 w-14 object-contain animate-float"
-                />
-              </div>
+            <div className="relative flex-shrink-0 flex items-center justify-center">
+              <MascotImage
+                src="/mascots/kang-cek-gacor.png"
+                alt="Status Skor Kang Cek"
+                fallbackEmoji={result.matchScore >= 75 ? "🔥" : "💪"}
+                className="h-16 w-16 object-contain animate-float"
+              />
             </div>
           </div>
 
@@ -127,15 +125,15 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
         </div>
 
         {/* Kolom Kata Kang Cek */}
-        <div className="md:col-span-8 bg-emerald-50/70 border border-emerald-100 rounded-3xl p-6 flex flex-col justify-center">
+        <div className="md:col-span-8 bg-emerald-50/70 rounded-3xl p-6 flex flex-col justify-center shadow-sm">
           <div className="flex items-center gap-2.5 mb-3">
-            <div className="relative h-7 w-7 flex-shrink-0 overflow-hidden rounded-full border border-amber-300 bg-amber-100 shadow-sm">
+            <div className="relative h-7 w-7 flex-shrink-0 flex items-center justify-center">
               <Image
                 src="/kang-cek.png"
                 alt="Kang Cek"
                 width={28}
                 height={28}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             </div>
             <h3 className="font-bold text-zinc-900 text-base">
@@ -151,7 +149,7 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
       {/* Matriks Skill Cocok vs Kurang */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Matched Skills */}
-        <div className="bg-white border border-zinc-200 rounded-3xl p-6 space-y-4">
+        <div className="bg-white rounded-3xl p-6 space-y-4 shadow-sm">
           <div className="flex items-start gap-3">
             <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
             <div>
@@ -183,7 +181,7 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
         </div>
 
         {/* Missing Skills */}
-        <div className="bg-white border border-zinc-200 rounded-3xl p-6 space-y-4">
+        <div className="bg-white rounded-3xl p-6 space-y-4 shadow-sm">
           <div className="flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
             <div>
@@ -230,11 +228,11 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
           {result.improvements.map((item, idx) => (
             <div
               key={idx}
-              className="bg-white border border-zinc-200 rounded-3xl p-6 space-y-4"
+              className="bg-white rounded-3xl p-6 space-y-4 shadow-sm"
             >
               <div className="grid grid-cols-1 lg:grid-cols-11 gap-4 items-center">
                 {/* Kalimat Lama */}
-                <div className="lg:col-span-5 bg-zinc-50 border border-zinc-200/80 rounded-2xl p-4 space-y-1.5">
+                <div className="lg:col-span-5 bg-zinc-50 rounded-2xl p-4 space-y-1.5">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
                     Kalimat Lama (Masih Biasa)
                   </span>
@@ -251,7 +249,7 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
                 </div>
 
                 {/* Kalimat Baru */}
-                <div className="lg:col-span-5 bg-emerald-50/60 border border-emerald-200 rounded-2xl p-4 space-y-2">
+                <div className="lg:col-span-5 bg-emerald-50/60 rounded-2xl p-4 space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">
                       Versi Upgrade Kang Cek

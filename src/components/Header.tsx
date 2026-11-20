@@ -2,7 +2,7 @@ import MascotImage from "@/components/MascotImage";
 
 export default function Header() {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-6 bg-emerald-50 rounded-3xl border border-emerald-100 max-w-5xl mx-auto my-6">
+    <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-6 bg-emerald-50 rounded-3xl max-w-5xl mx-auto my-6 shadow-sm">
       <div className="space-y-3 max-w-xl text-center md:text-left">
         <h1 className="text-3xl font-extrabold text-zinc-900 tracking-tight leading-tight">
           Udah capek sebar CV tapi dicuekin HR? <br />
@@ -14,18 +14,16 @@ export default function Header() {
         </p>
       </div>
 
-      {/* Visual Maskot */}
-      <div className="flex flex-col items-center gap-2">
-        <div className="relative w-28 h-28 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-md">
-          <div className="h-full w-full overflow-hidden rounded-full flex items-center justify-center p-1">
-            <MascotImage
-              src="/mascots/kang-cek-hi.png"
-              alt="Maskot Kang Cek"
-              fallbackEmoji="🐱"
-              className="h-full w-full object-contain animate-float"
-            />
-          </div>
-          <span className="absolute -bottom-2 bg-amber-400 text-zinc-950 font-bold text-xs px-2.5 py-1 rounded-full shadow border border-amber-300">
+      {/* Visual Maskot Berdiri Sendiri */}
+      <div className="flex flex-col items-center gap-1.5">
+        <div className="relative flex flex-col items-center justify-center">
+          <MascotImage
+            src="/mascots/kang-cek-hi.png"
+            alt="Maskot Kang Cek"
+            fallbackEmoji="🐱"
+            className="h-28 w-28 object-contain animate-float"
+          />
+          <span className="-mt-1 bg-amber-400 text-zinc-950 font-bold text-xs px-2.5 py-0.5 rounded-full shadow">
             Kang Cek
           </span>
         </div>

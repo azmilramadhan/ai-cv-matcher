@@ -132,7 +132,7 @@ export default function InputSection({
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         {/* Panel CV */}
-        <div className="flex flex-col space-y-2 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
+        <div className="flex flex-col space-y-2 rounded-2xl bg-white p-4 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 pb-3">
             <div>
               <label
@@ -232,7 +232,7 @@ export default function InputSection({
         </div>
 
         {/* Panel Job Description */}
-        <div className="flex flex-col space-y-2 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
+        <div className="flex flex-col space-y-2 rounded-2xl bg-white p-4 shadow-sm">
           <div className="flex items-center justify-between border-b border-zinc-100 pb-3">
             <div>
               <label
@@ -277,23 +277,23 @@ export default function InputSection({
         </div>
       </div>
 
-      {/* Primary Action Button */}
+      {/* Primary Action Button (Warna Kuning Kucing) */}
       <div className="flex justify-end pt-1">
         <button
           type="button"
           onClick={onAnalyze}
           disabled={!canAnalyze}
-          className="inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-zinc-900 px-7 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:bg-zinc-300 sm:w-auto"
+          className="inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-amber-400 px-7 py-3 text-sm font-bold text-zinc-950 shadow-sm transition hover:bg-amber-300 hover:shadow active:bg-amber-500 disabled:cursor-not-allowed disabled:bg-amber-100 disabled:text-zinc-400 sm:w-auto"
         >
           {isLoading ? (
             <>
-              <div className="relative h-5 w-5 overflow-hidden rounded-full border border-amber-300 bg-amber-100 animate-spin flex-shrink-0">
+              <div className="relative h-5 w-5 flex-shrink-0 animate-spin flex items-center justify-center">
                 <Image
                   src="/kang-cek.png"
                   alt="Kang Cek"
                   width={20}
                   height={20}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain"
                 />
               </div>
               <span>Lagi dibedah Kang Cek...</span>

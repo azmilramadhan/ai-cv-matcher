@@ -88,7 +88,7 @@ export default function Home() {
       <header className="border-b border-zinc-200 bg-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
           <div className="flex items-center gap-2.5">
-            <div className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-amber-300 bg-amber-100">
+            <div className="relative flex h-8 w-8 items-center justify-center flex-shrink-0">
               <MascotImage
                 src="/mascots/kang-cek-hi.png"
                 alt="Kang Cek"
@@ -137,7 +137,7 @@ export default function Home() {
 
         {/* Error Alert */}
         {error && (
-          <div className="flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-xs text-rose-800">
+          <div className="flex items-start gap-3 rounded-2xl bg-rose-50 p-4 text-xs text-rose-800 shadow-sm">
             <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-rose-600" />
             <div>
               <p className="font-bold text-rose-900">Waduh, Kang Cek Belum Bisa Bedah CV Kamu Nih</p>
