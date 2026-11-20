@@ -217,7 +217,7 @@ export default function InputSection({
               className="flex items-center gap-2 text-sm font-semibold text-zinc-900"
             >
               <Briefcase className="h-4 w-4 text-zinc-700" />
-              Deskripsi Pekerjaan (Job Desc)
+              Syarat Kerja Incaran (Job Desc)
             </label>
             <span className="text-xs text-zinc-400">Target Lowongan</span>
           </div>
@@ -228,7 +228,7 @@ export default function InputSection({
               rows={12}
               value={jobDescText}
               onChange={(e) => setJobDescText(e.target.value)}
-              placeholder="Tempelkan lowongan / deskripsi pekerjaan di sini..."
+              placeholder="Tempelkan syarat kerja atau lowongan incaranmu di sini..."
               disabled={isLoading}
               className={`w-full resize-y rounded-lg border bg-zinc-50/50 p-3 text-sm text-zinc-900 transition focus:bg-white focus:outline-none focus:ring-1 disabled:bg-zinc-50 ${
                 jobDescText.length > MAX_CHARS
@@ -261,10 +261,10 @@ export default function InputSection({
           {isLoading ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin text-zinc-300" />
-              <span>Menganalisis CV...</span>
+              <span>Kang Cek lagi bedah CV...</span>
             </>
           ) : (
-            <span>Analisis Kecocokan</span>
+            <span>Bedah CV Sekarang</span>
           )}
         </button>
       </div>

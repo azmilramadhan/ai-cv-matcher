@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ShieldCheck, AlertCircle, FileSearch2 } from "lucide-react";
+import Image from "next/image";
+import { ShieldCheck, AlertCircle } from "lucide-react";
 import InputSection from "@/components/InputSection";
 import ResultDashboard from "@/components/ResultDashboard";
 import HistoryBar from "@/components/HistoryBar";
+import Header from "@/components/Header";
 import type { AnalysisResult } from "@/lib/schema";
 import { getHistory, saveHistory, clearHistory, type HistoryItem } from "@/lib/history";
 
@@ -76,15 +78,21 @@ export default function Home() {
       <header className="border-b border-zinc-200 bg-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-900 text-white">
-              <FileSearch2 className="h-4 w-4" />
+            <div className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-full border border-amber-300 bg-amber-100">
+              <Image
+                src="/kang-cek.png"
+                alt="Kang Cek"
+                width={32}
+                height={32}
+                className="h-full w-full object-cover"
+              />
             </div>
             <div>
               <h1 className="text-sm font-semibold tracking-tight text-zinc-900">
-                AI CV &amp; Job Matcher
+                Kang Cek <span className="font-normal text-zinc-400">|</span> AI CV Matcher
               </h1>
               <p className="text-[11px] text-zinc-500">
-                Audit keselarasan kompetensi kandidat berbasis standar rekrutmen.
+                Bedah keselarasan CV dengan lowongan incaranmu secara instan.
               </p>
             </div>
           </div>
@@ -98,6 +106,9 @@ export default function Home() {
 
       {/* Main Container */}
       <main className="mx-auto max-w-5xl space-y-6 px-5 py-6">
+        {/* Banner Hero Kang Cek */}
+        <Header />
+
         {/* Strip Riwayat Analisis */}
         <HistoryBar
           items={historyItems}

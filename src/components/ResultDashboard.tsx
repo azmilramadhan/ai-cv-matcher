@@ -1,8 +1,17 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Check, Copy, CheckCircle2, AlertOctagon, ArrowRight, FileCheck2 } from "lucide-react";
-import type { AnalysisResult } from "@/lib/schema";
+import { useState } from 'react';
+import {
+  CheckCircle2,
+  AlertCircle,
+  Copy,
+  Check,
+  ArrowRight,
+  Flame,
+  ThumbsUp,
+  Wrench,
+} from 'lucide-react';
+import { AnalysisResult } from '@/lib/schema';
 
 interface ResultDashboardProps {
   result: AnalysisResult;
@@ -16,171 +25,182 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
       await navigator.clipboard.writeText(text);
       setCopiedIndex(index);
       setTimeout(() => setCopiedIndex(null), 2000);
-    } catch {
-      // ponytail: fallback clipboard if permission denied
+    } catch (err) {
+      console.error('Gagal menyalin teks:', err);
     }
   };
 
-  const getScoreTheme = (score: number) => {
-    if (score > 75) {
+  // Penentuan warna & reaksi Kang Cek berdasarkan skor
+  const getScoreFeedback = (score: number) => {
+    if (score >= 75) {
       return {
-        badgeClass: "bg-emerald-50 text-emerald-700 border-emerald-200",
-        barClass: "bg-emerald-600",
-        textClass: "text-emerald-700",
-        status: "Kecocokan Tinggi",
+        badge: 'Gacor! Siap Dilamar',
+        badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+        barColor: 'bg-emerald-500',
+        textColor: 'text-emerald-600',
+        icon: <Flame className="w-5 h-5 text-emerald-600" />,
       };
     }
     if (score >= 50) {
       return {
-        badgeClass: "bg-amber-50 text-amber-700 border-amber-200",
-        barClass: "bg-amber-500",
-        textClass: "text-amber-700",
-        status: "Kecocokan Menengah",
+        badge: 'Lumayan, Tinggal Poles Dikit',
+        badgeColor: 'bg-amber-100 text-amber-800 border-amber-200',
+        barColor: 'bg-amber-500',
+        textColor: 'text-amber-600',
+        icon: <ThumbsUp className="w-5 h-5 text-amber-600" />,
       };
     }
     return {
-      badgeClass: "bg-rose-50 text-rose-700 border-rose-200",
-      barClass: "bg-rose-600",
-      textClass: "text-rose-700",
-      status: "Kecocokan Rendah",
+      badge: 'Perlu Rombak Dulu Nih',
+      badgeColor: 'bg-rose-100 text-rose-800 border-rose-200',
+      barColor: 'bg-rose-500',
+      textColor: 'text-rose-600',
+      icon: <Wrench className="w-5 h-5 text-rose-600" />,
     };
   };
 
-  const theme = getScoreTheme(result.matchScore);
+  const feedback = getScoreFeedback(result.matchScore);
 
   return (
-    <div className="w-full space-y-6">
-      {/* Section Header */}
-      <div className="flex items-center justify-between border-b border-zinc-200 pb-3">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
-          Laporan Audit Kecocokan
-        </h2>
-        <span className="font-mono text-xs tabular-nums text-zinc-400">
-          Status: Selesai Dievaluasi
+    <section className="max-w-5xl mx-auto mt-10 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Header Hasil */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 pb-4">
+        <div>
+          <h2 className="text-2xl font-extrabold text-zinc-900">
+            Hasil Bedah CV ala Kang Cek
+          </h2>
+          <p className="text-sm text-zinc-600">
+            Ini dia kisi-kisi jujur biar CV-mu makin dilirik tim HR.
+          </p>
+        </div>
+        <span
+          className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold border self-start sm:self-auto ${feedback.badgeColor}`}
+        >
+          {feedback.icon}
+          {feedback.badge}
         </span>
       </div>
 
-      {/* Grid Asimetris: Skor (Kiri) & Ringkasan (Kanan) */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-        {/* Kartu Skor Kiri */}
-        <div className="flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 lg:col-span-4">
-          <div className="space-y-3">
-            <span className="text-xs font-medium text-zinc-500">Skor Keselarasan</span>
-            <div className="flex items-baseline gap-2">
-              <span className={`font-mono text-5xl font-bold tracking-tight tabular-nums ${theme.textClass}`}>
+      {/* Kartu Skor & Ringkasan */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+        {/* Kolom Skor */}
+        <div className="md:col-span-4 bg-white border border-zinc-200 rounded-3xl p-6 flex flex-col justify-between">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+              Skor Kecocokan ATS
+            </span>
+            <div className="mt-2 flex items-baseline gap-1">
+              <span
+                className={`text-5xl font-black font-mono tabular-nums ${feedback.textColor}`}
+              >
                 {result.matchScore}
               </span>
-              <span className="font-mono text-2xl font-medium text-zinc-400">/ 100</span>
-            </div>
-            <div className="w-full rounded-full bg-zinc-100 p-0.5">
-              <div
-                className={`h-2 rounded-full transition-all duration-500 ${theme.barClass}`}
-                style={{ width: `${Math.min(Math.max(result.matchScore, 0), 100)}%` }}
-              />
+              <span className="text-xl font-bold text-zinc-400">/ 100</span>
             </div>
           </div>
 
-          <div className="pt-5">
-            <span
-              className={`inline-flex items-center rounded-md border px-2.5 py-1 text-xs font-medium ${theme.badgeClass}`}
-            >
-              {theme.status}
-            </span>
+          <div className="mt-6 space-y-2">
+            <div className="w-full h-3 bg-zinc-100 rounded-full overflow-hidden">
+              <div
+                className={`h-full rounded-full transition-all duration-700 ${feedback.barColor}`}
+                style={{ width: `${result.matchScore}%` }}
+              />
+            </div>
+            <p className="text-xs text-zinc-500">
+              Target aman lolos seleksi awal HR biasanya di angka <strong>75+</strong>.
+            </p>
           </div>
         </div>
 
-        {/* Kartu Ringkasan Kanan */}
-        <div className="flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 lg:col-span-8">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <FileCheck2 className="h-4 w-4 text-zinc-600" />
-              <h3 className="text-sm font-semibold text-zinc-900">
-                Ringkasan Evaluasi Rekruter
-              </h3>
-            </div>
-            <p className="text-sm leading-relaxed text-zinc-700">
-              {result.summary}
-            </p>
+        {/* Kolom Kata Kang Cek */}
+        <div className="md:col-span-8 bg-emerald-50/70 border border-emerald-100 rounded-3xl p-6 flex flex-col justify-center">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xl">🐱</span>
+            <h3 className="font-bold text-zinc-900 text-base">
+              Catatan Jujur dari Kang Cek:
+            </h3>
           </div>
-          <div className="border-t border-zinc-100 pt-4">
-            <p className="text-[11px] text-zinc-400">
-              Evaluasi objektif berbasis perbandingan kata kunci, kedalaman tanggung jawab, dan persyaratan lowongan.
-            </p>
-          </div>
+          <p className="text-zinc-700 leading-relaxed text-sm md:text-base">
+            {result.summary}
+          </p>
         </div>
       </div>
 
-      {/* Matriks Skills: Matched vs Missing */}
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+      {/* Matriks Skill Cocok vs Kurang */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Matched Skills */}
-        <div className="flex flex-col rounded-xl border border-zinc-200 bg-white p-5">
-          <div className="mb-4 flex items-center justify-between border-b border-zinc-100 pb-3">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-              <h4 className="text-sm font-semibold text-zinc-900">
-                Skill Teridentifikasi Cocok
-              </h4>
+        <div className="bg-white border border-zinc-200 rounded-3xl p-6 space-y-4">
+          <div className="flex items-start gap-3">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-bold text-zinc-900">
+                Udah Masuk Radar HR ({result.matchedSkills.length})
+              </h3>
+              <p className="text-xs text-zinc-500 mt-0.5">
+                Kata kunci & skill ini udah aman terbaca di CV kamu. Pertahankan!
+              </p>
             </div>
-            <span className="font-mono text-xs font-semibold tabular-nums text-emerald-700">
-              {result.matchedSkills.length}
-            </span>
           </div>
-          {result.matchedSkills.length === 0 ? (
-            <p className="text-xs text-zinc-400">Tidak ada skill yang terdeteksi cocok.</p>
-          ) : (
-            <div className="flex flex-wrap gap-1.5">
+
+          {result.matchedSkills.length > 0 ? (
+            <div className="flex flex-wrap gap-2 pt-1">
               {result.matchedSkills.map((skill, idx) => (
                 <span
                   key={idx}
-                  className="inline-flex items-center rounded-md border border-emerald-200 bg-emerald-50/70 px-2.5 py-1 text-xs font-medium text-emerald-800"
+                  className="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-semibold"
                 >
                   {skill}
                 </span>
               ))}
             </div>
+          ) : (
+            <p className="text-xs text-zinc-400 italic">
+              Belum ada kata kunci spesifik yang cocok terdeteksi.
+            </p>
           )}
         </div>
 
         {/* Missing Skills */}
-        <div className="flex flex-col rounded-xl border border-zinc-200 bg-white p-5">
-          <div className="mb-4 flex items-center justify-between border-b border-zinc-100 pb-3">
-            <div className="flex items-center gap-2">
-              <AlertOctagon className="h-4 w-4 text-rose-600" />
-              <h4 className="text-sm font-semibold text-zinc-900">
-                Skill Belum Terlihat di CV
-              </h4>
+        <div className="bg-white border border-zinc-200 rounded-3xl p-6 space-y-4">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
+            <div>
+              <h3 className="font-bold text-zinc-900">
+                Belum Kelihatan di CV ({result.missingSkills.length})
+              </h3>
+              <p className="text-xs text-zinc-500 mt-0.5">
+                Syarat lowongan minta ini, tapi belum tertulis di CV-mu. Kalau emang bisa, wajib tambahin!
+              </p>
             </div>
-            <span className="font-mono text-xs font-semibold tabular-nums text-rose-700">
-              {result.missingSkills.length}
-            </span>
           </div>
-          {result.missingSkills.length === 0 ? (
-            <p className="text-xs text-zinc-500">
-              Semua kualifikasi utama lowongan sudah tercakup di CV Anda.
-            </p>
-          ) : (
-            <div className="flex flex-wrap gap-1.5">
+
+          {result.missingSkills.length > 0 ? (
+            <div className="flex flex-wrap gap-2 pt-1">
               {result.missingSkills.map((skill, idx) => (
                 <span
                   key={idx}
-                  className="inline-flex items-center rounded-md border border-rose-200 bg-rose-50/70 px-2.5 py-1 text-xs font-medium text-rose-800"
+                  className="px-3 py-1 bg-rose-50 text-rose-700 border border-rose-200 rounded-xl text-xs font-semibold"
                 >
-                  {skill}
+                  + {skill}
                 </span>
               ))}
             </div>
+          ) : (
+            <p className="text-xs text-emerald-600 font-medium">
+              Mantap! Semua syarat utama udah tertulis di CV-mu.
+            </p>
           )}
         </div>
       </div>
 
-      {/* Saran Perbaikan Pengalaman (Before vs After) */}
-      <div className="rounded-xl border border-zinc-200 bg-white p-6">
-        <div className="mb-5 border-b border-zinc-100 pb-3">
-          <h4 className="text-sm font-semibold text-zinc-900">
-            Saran Revisi Kalimat Pengalaman
-          </h4>
-          <p className="mt-0.5 text-xs text-zinc-500">
-            Perbandingan kalimat asli CV dengan rumusan berbasis tindakan dan hasil metrik terukur.
+      {/* Saran Perbaikan Kalimat (Before vs After) */}
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-lg font-extrabold text-zinc-900">
+            Biar Kalimat CV-mu Makin Nendang
+          </h3>
+          <p className="text-xs text-zinc-500">
+            Klik tombol salin di bawah, lalu langsung tempel buat ganti kalimat lama di CV kamu.
           </p>
         </div>
 
@@ -188,63 +208,65 @@ export default function ResultDashboard({ result }: ResultDashboardProps) {
           {result.improvements.map((item, idx) => (
             <div
               key={idx}
-              className="rounded-lg border border-zinc-200 bg-zinc-50/50 p-4"
+              className="bg-white border border-zinc-200 rounded-3xl p-6 space-y-4"
             >
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                {/* Sebelum */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
-                    <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
-                    Sebelum (Asli dari CV)
-                  </div>
-                  <p className="rounded-md border border-zinc-200 bg-white p-3 text-xs leading-relaxed text-zinc-600">
+              <div className="grid grid-cols-1 lg:grid-cols-11 gap-4 items-center">
+                {/* Kalimat Lama */}
+                <div className="lg:col-span-5 bg-zinc-50 border border-zinc-200/80 rounded-2xl p-4 space-y-1.5">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
+                    Kalimat Lama (Masih Biasa)
+                  </span>
+                  <p className="text-sm text-zinc-600 line-through decoration-rose-300">
                     &ldquo;{item.original}&rdquo;
                   </p>
                 </div>
 
-                {/* Sesudah */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-emerald-700">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
-                      Sesudah (Rekomendasi Berorientasi Metrik)
-                    </div>
+                {/* Panah */}
+                <div className="lg:col-span-1 flex justify-center">
+                  <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center rotate-90 lg:rotate-0">
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+
+                {/* Kalimat Baru */}
+                <div className="lg:col-span-5 bg-emerald-50/60 border border-emerald-200 rounded-2xl p-4 space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">
+                      Versi Upgrade Kang Cek
+                    </span>
                     <button
                       type="button"
                       onClick={() => handleCopy(item.improved, idx)}
-                      className="inline-flex items-center gap-1 rounded border border-zinc-200 bg-white px-2 py-0.5 text-[11px] font-medium text-zinc-700 transition hover:bg-zinc-100"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-white border border-emerald-200 text-emerald-700 hover:bg-emerald-600 hover:text-white transition-colors cursor-pointer"
                     >
                       {copiedIndex === idx ? (
                         <>
-                          <Check className="h-3 w-3 text-emerald-600" />
-                          <span className="text-emerald-700 font-medium">Tersalin!</span>
+                          <Check className="w-3.5 h-3.5" />
+                          Tersalin!
                         </>
                       ) : (
                         <>
-                          <Copy className="h-3 w-3 text-zinc-500" />
-                          <span>Salin Teks</span>
+                          <Copy className="w-3.5 h-3.5" />
+                          Salin Kalimat
                         </>
                       )}
                     </button>
                   </div>
-                  <p className="rounded-md border border-emerald-200 bg-emerald-50/50 p-3 text-xs font-medium leading-relaxed text-zinc-900">
+                  <p className="text-sm font-medium text-zinc-900">
                     &ldquo;{item.improved}&rdquo;
                   </p>
                 </div>
               </div>
 
               {/* Alasan */}
-              <div className="mt-3 flex items-start gap-2 border-t border-zinc-200/80 pt-3 text-xs text-zinc-600">
-                <ArrowRight className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-zinc-400" />
-                <span>
-                  <strong className="font-medium text-zinc-900">Alasan:</strong> {item.reason}
-                </span>
+              <div className="pt-2 border-t border-zinc-100 flex items-start gap-2 text-xs text-zinc-600">
+                <span className="font-bold text-amber-600 shrink-0">💡 Kenapa lebih oke?</span>
+                <span>{item.reason}</span>
               </div>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
-
