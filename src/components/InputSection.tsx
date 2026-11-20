@@ -325,16 +325,7 @@ export default function InputSection({
             </>
           ) : (
             <>
-              <div className="relative h-5 w-5 overflow-hidden rounded-full border border-amber-300 bg-amber-100 flex-shrink-0">
-                <Image
-                  src="/kang-cek.png"
-                  alt="Kang Cek"
-                  width={20}
-                  height={20}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <span>Bedah CV Sekarang (Gratis)</span>
+              <span>Bedah CV Sekarang</span>
             </>
           )}
         </button>
