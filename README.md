@@ -10,11 +10,12 @@
 
 Berbeda dengan *chatbot* AI generik yang hanya mengembalikan paragraf teks panjang, LolosKerja membedah CV menjadi laporan audit terstruktur, lengkap dengan skor kecocokan ATS, matriks pemetaan *skill*, serta rekomendasi penulisan ulang poin pengalaman yang siap salin, dibalut dengan antarmuka ramah pengguna dan *microcopy* khas Indonesia bersama maskot **Kang Cek**.
 
-🔗 **Live Demo:** `https://.vercel.app`
+🔗 **Live Demo:** `loloskerja-ai-cv-matcher.vercel.app`
 
 ---
 <p align="center">
   <img src="src/assets/preview.png" alt="Preview LolosKerja" width="100%">
+  <img src="src/assets/preview1.png" alt="Preview LolosKerja" width="100%">
 </p>
 
 ## Fitur Utama
