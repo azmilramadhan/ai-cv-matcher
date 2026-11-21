@@ -3,16 +3,16 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <div className="relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 p-6 sm:p-8 rounded-3xl max-w-5xl mx-auto my-6 shadow-sm">
+    <div className="relative isolate overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 p-6 sm:p-8 rounded-3xl max-w-5xl mx-auto my-6 shadow-sm">
       {/* Background Image & Gradient Overlay */}
       <Image
         src="/mascots/bg-header.jpeg"
         alt="Header Background"
         fill
         priority
-        className="object-cover object-center -z-10"
+        className="object-cover object-center -z-20"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 via-zinc-950/80 to-emerald-950/70 -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/85 via-zinc-950/70 to-emerald-950/60 -z-10" />
 
       <div className="space-y-3 max-w-xl text-center md:text-left z-10">
         <h1 className="text-3xl font-extrabold text-white tracking-tight leading-tight drop-shadow-sm">
